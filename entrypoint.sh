@@ -6,7 +6,11 @@ if [ -n "$(ls -A $DIR)" ]; then
 else
     echo "$DIR is empty. Initialising prestashop from zip"
     unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/html
+    chown -R www-data /var/www/html/*
 fi
 
-php-fpm
+php-fpm -D &
+
+nginx -g "daemon off;"
+
 
